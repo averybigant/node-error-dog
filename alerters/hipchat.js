@@ -12,7 +12,7 @@ var request = require('request');
  * @param {Object} target
  * @param {Function} log
  * @param {Object} settings
- * @return {Console}
+ * @return {Hipchat}
  */
 exports.init = function(emitter, target, log, settings) {
   return new Hipchat(emitter, target, log, settings);
@@ -25,7 +25,7 @@ exports.init = function(emitter, target, log, settings) {
  * @param {Object} target
  * @param {Function} log
  * @param {Object} settings
- * @return {Console}
+ * @return {Hipchat}
  *
  * @settings
  *
