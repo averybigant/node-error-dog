@@ -33,7 +33,7 @@ function Console(emitter, target, log, settings) {
       target.name,
       level,
       extra,
-      lines.join('\n').slice(0, 79)
+      lines.join('\n')
     ));
   });
 }
