@@ -57,11 +57,11 @@ function watch(target) {
 
   tail = new Tail(target.path);
   tail.on('line', function(line) {
-    line = target.extract(line);
-
     if (target.ignore && target.ignore(line)) {
       return;
     }
+
+    line = target.extract(line);
     emitter.emit('line', line);
   });
 
