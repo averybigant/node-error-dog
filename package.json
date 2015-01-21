@@ -1,6 +1,6 @@
 {
   "name": "errdog",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "repository": {
     "type": "git",
     "url": "git://github.com/eleme/node-error-dog.git"
@@ -8,8 +8,7 @@
   "author": "hit9 <wangchao@ele.me>",
   "description": "Notify you on error logs!",
   "dependencies": {
-    "request": "^2.48.0",
-    "tail": "^0.4.0"
+    "request": "^2.48.0"
   },
   "bin": {
     "errdog": "./bin/errdog.js"

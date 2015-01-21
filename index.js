@@ -26,7 +26,7 @@
 
 var events = require('events');
 var util = require('util');
-var Tail = require('tail').Tail;
+var child_process = require('child_process');
 
 
 /**
@@ -55,14 +55,28 @@ function watch(target) {
 
   var emitter = new events.EventEmitter();
 
-  tail = new Tail(target.path);
-  tail.on('line', function(line) {
-    if (target.ignore && target.ignore(line)) {
-      return;
-    }
+  var child = child_process.spawn('tail', ['-n', 0, '-f', target.path]);
 
-    line = target.extract(line);
-    emitter.emit('line', line);
+  child.stdout.on('data', function(data) {
+    var lines = data.toString().trim()
+                .split('\n');
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+
+      if (target.ignore && target.ignore(line)) {
+        continue;
+      }
+
+      line = target.extract(line);
+      emitter.emit('line', line);
+    }
+  });
+
+  child.on('error', function(error) {
+    if (error) {
+      throw error;
+    }
   });
 
   target.alerters.forEach(function(list){
