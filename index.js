@@ -79,6 +79,10 @@ function watch(target) {
     }
   });
 
+  child.on('exit', function(code, signal) {
+    throw new Error('Child process exit with code ' + code);
+  });
+
   target.alerters.forEach(function(list){
     var alerter = list[0];
     var settings = list[1] || {};
