@@ -55,7 +55,7 @@ function watch(target) {
 
   var emitter = new events.EventEmitter();
 
-  var child = child_process.spawn('tail', ['-n', 0, '-f', target.path]);
+  var child = child_process.spawn('tail', ['-n', 0, '-F', target.path]);
 
   child.stdout.on('data', function(data) {
     var lines = data.toString().trim()
