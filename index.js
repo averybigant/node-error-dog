@@ -26,7 +26,6 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-var fs = require('fs');
 var events = require('events');
 var util = require('util');
 var child_process = require('child_process');
