@@ -2,6 +2,8 @@
  * Node Error Dog, Notify you on error logs!
  * https://github.com/eleme/node-error-dog.git
  *
+ * Only avaliable on Unix (with GNU tail), the Linux or OSX(with gnu tail).
+ *
  * The MIT License (MIT)
  * Copyright (c) 2014 hit9
  *
@@ -24,6 +26,7 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+var fs = require('fs');
 var events = require('events');
 var util = require('util');
 var child_process = require('child_process');
@@ -55,6 +58,10 @@ function watch(target) {
 
   var emitter = new events.EventEmitter();
 
+  // `tail -F` will keep track changes to the file by filename, instead
+  // of using the inode number.This can handle the situation like
+  // `logrotation`, and it also keeps trying to open a new file if it's
+  // not present.
   var child = child_process.spawn('tail', ['-n', 0, '-F', target.path]);
 
   child.stdout.on('data', function(data) {
