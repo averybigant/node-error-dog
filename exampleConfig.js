@@ -22,7 +22,7 @@ var foo = {
   name: 'foo',
   path: '/path/to/foo.error.log',
   extract: function(line) {return line;},
-  ignore: function(line) {return line.indexOf('to-be-ignored') < 0;}
+  ignore: function(line) {return line.indexOf('to-be-ignored') < 0;},
   alerters: [
     [console_],
     [hipchat, {token: 'xxx', room: 123, atwho: ['@here']}]
