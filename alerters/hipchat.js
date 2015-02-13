@@ -2,6 +2,8 @@
  * Alerter hipchat.
  */
 
+'use strict';
+
 var util = require('util');
 var request = require('request');
 

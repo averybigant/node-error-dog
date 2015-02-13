@@ -2,6 +2,8 @@
  * Alerter console
  */
 
+'use strict';
+
 var util = require('util');
 
 

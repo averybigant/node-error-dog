@@ -2,6 +2,8 @@
  * Condition intensity
  */
 
+'use strict';
+
 var util = require('util');
 
 
