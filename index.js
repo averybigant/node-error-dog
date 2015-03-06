@@ -76,6 +76,10 @@ function watch(target) {
         continue;
       }
 
+      if (target.grep && !target.grep(line)) {
+        continue;
+      }
+
       line = target.extract(line);
       emitter.emit('line', line);
     }
