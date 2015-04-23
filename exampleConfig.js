@@ -18,8 +18,8 @@ var foo = {
     return line.indexOf('to-be-ignored') < 0;
   },
   alerters: [
-    [console_],
-    [hipchat, {token: 'xxx', room: 123, atwho: ['@here']}]
+    [console_, {limit: -1}],
+    [hipchat, {token: 'xxx', room: 123, atwho: ['@here'], limit: -1}]
   ],
   conditions: [
     [intensity]
