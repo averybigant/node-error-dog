@@ -28,6 +28,7 @@ function Intensity(emitter, target, log, settings) {
       if (lines.length >= thresholds[level] && lines.length > 0) {
         emitter.emit('alert', level, lines, util.format(
           '%d error messages in %d seconds', lines.length, interval));
+        break;
       }
     }
     lines = [];
