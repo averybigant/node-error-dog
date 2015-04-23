@@ -1,52 +1,32 @@
-/**
- * Alerter hipchat.
- */
-
 'use strict';
 
-var util = require('util');
 var request = require('request');
+var util    = require('util');
 
-
-/**
- * @exports
- * @param {EventEmitter} emitter
- * @param {Object} target
- * @param {Function} log
- * @param {Object} settings
- * @return {Hipchat}
- */
 exports.init = function(emitter, target, log, settings) {
   return new Hipchat(emitter, target, log, settings);
 };
 
-
-/**
- * @constructor
- * @param {EventEmitter} emitter
- * @param {Object} target
- * @param {Function} log
- * @param {Object} settings
- * @return {Hipchat}
- *
- * @settings
- *
- *   @key {String} token  // required
- *   @key {Number} room  // required
- *   @key {String} from  // optional, default: target.name
- *   @key {Boolean} notify  // optional, default: true
- *   @key {String} messageFormat  // optional, default: 'text'
- *   @key {Array} atwho  // optional, default: [], e.g. ['@hit9']
- */
+// settings
+//
+//   @key {String} token  // required
+//   @key {Number} room  // required
+//   @key {String} from  // optional, default: target.name
+//   @key {Boolean} notify  // optional, default: true
+//   @key {String} messageFormat  // optional, default: 'text'
+//   @key {Array} atwho  // optional, default: [], e.g. ['@hit9']
+//
 function Hipchat(emitter, target, log, settings) {
-  var token = settings.token;
-  var room = settings.room;
-  var from = settings.from || target.name;
-  var notify = settings.notify || true;
+  // settings
+  var token         = settings.token;
+  var room          = settings.room;
+  var from          = settings.from || target.name;
+  var notify        = settings.notify || true;
   var messageFormat = settings.messageFormat || 'text';
-  var atwho = settings.atwho || [];
+  var atwho         = settings.atwho || [];
+  // api url
   var url = util.format('http://api.hipchat.com/v1/rooms/message' +
-                       '?format=json&auth_token=%s', token);
+                        '?format=json&auth_token=%s', token);
 
   var alert = function(message, color, code) {
     var form = {

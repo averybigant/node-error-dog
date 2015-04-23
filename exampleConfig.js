@@ -1,28 +1,22 @@
-/**
- * Example configuration for errdog
- */
+// Example configuration for errdog
 
-/**
- * conditions
- */
+// conditions
 var intensity = require('./conditions/intensity');
 
-
-/**
- * alerters
- */
+// alerters
 var console_ = require('./alerters/console');
 var hipchat = require('./alerters/hipchat');
 
-
-/**
- * target `foo`
- */
+// target `foo`
 var foo = {
   name: 'foo',
   path: '/path/to/foo.error.log',
-  extract: function(line) {return line;},
-  ignore: function(line) {return line.indexOf('to-be-ignored') < 0;},
+  extract: function(line) {
+    return line;
+  },
+  ignore: function(line) {
+    return line.indexOf('to-be-ignored') < 0;
+  },
   alerters: [
     [console_],
     [hipchat, {token: 'xxx', room: 123, atwho: ['@here']}]
@@ -32,10 +26,5 @@ var foo = {
   ]
 };
 
-
-/**
- * Exports targets
- */
-exports = module.exports = [
-  foo
-];
+// exports
+exports = module.exports = [foo];
