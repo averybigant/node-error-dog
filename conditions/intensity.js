@@ -1,41 +1,20 @@
-/**
- * Condition intensity
- */
-
 'use strict';
 
 var util = require('util');
 
-
-/**
- * @exports
- * @param {EventEmitter} emitter
- * @param {Object} target
- * @param {Function} log
- * @param {Object} settings
- * @return {Intensity}
- */
 exports.init = function(emitter, target, log, settings) {
   return new Intensity(emitter, target, log, settings);
 };
 
-
-/**
- * @constructor
- * @param {EventEmitter} emitter
- * @param {Object} target
- * @param {Function} log
- * @param {Object} settings
- * @return {Intensity}
- *
- * @settings
- *
- *   @key {Number} interval  // optional, default: 60 (s)
- *   @key {Array} thresholds // optional, default: [1, 15, 45]
- */
-
+// settings
+//
+//   @key {Number} interval  // optional, default: 60 (s)
+//   @key {Array} thresholds // optional, default: [1, 15, 45]
+//
+//
 function Intensity(emitter, target, log, settings) {
-  var interval = settings.interval || 60;
+  // settings
+  var interval   = settings.interval || 60;
   var thresholds = settings.thresholds || [1, 15, 45];
 
   var lines = [];

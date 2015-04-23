@@ -31,4 +31,4 @@ errdog ./config.js
 License
 -------
 
-MIT. Eleme, Inc (c) 2014
+MIT. Eleme, Inc (c) 2014 - 2015.
