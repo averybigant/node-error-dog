@@ -47,10 +47,17 @@ function Hipchat(emitter, target, log, settings) {
   var colors = ['gray', 'yellow', 'red'];
 
   emitter.on('alert', function(level, lines, extra) {
+    var limit = settings.limit || -1;
+    var limit_info = "";
     var color = colors[level];
 
+    if (limit > 0 && lines.length > limit) {
+        lines = lines.slice(lines.length - limit, lines.length);
+        limit_info = util.format(" (below is the last %d of them)", limit);
+    }
+
     if (level === 2 && atwho.length > 0) {
-      alert(util.format('%s %s', atwho.join(' '), extra), color, false);
+      alert(util.format('%s %s%s', atwho.join(' '), extra, limit_info), color, false);
     }
     return alert(lines.join('\n').slice(0, 9900), color, true);
   });
