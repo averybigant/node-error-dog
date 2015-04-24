@@ -52,6 +52,8 @@ function Hipchat(emitter, target, log, settings) {
     if (level === 2 && atwho.length > 0) {
       alert(util.format('%s %s', atwho.join(' '), extra), color, false);
     }
-    return alert(lines.join('\n').slice(0, 9900), color, true);
+    if (lines.length > 0) {
+      return alert(lines.join('\n').slice(0, 9900), color, true);
+    }
   });
 }

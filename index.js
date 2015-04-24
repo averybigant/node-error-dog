@@ -29,8 +29,26 @@ function watch(target) {
   target.extract = target.extract || function(line) {
     return line;
   };
+  target.limit = target.limit || 0;
+
 
   var emitter = new events.EventEmitter();
+
+  var lineCount = 0;
+  var lastCount = 0;
+  var banned = false;
+
+  setInterval(function() {
+      lastCount = lineCount;
+      lineCount = 0;
+      if(banned && lastCount < target.limit / 2){
+          banned = false;
+          emitter.emit('alert', 2, [],
+                       util.format('error msg frequency goes below %d/s again',
+                       target.limit));
+      }
+  }, 500);
+
 
   // `tail -F` will keep track changes to the file by filename, instead
   // of using the inode number.This can handle the situation like
@@ -42,8 +60,22 @@ function watch(target) {
     var lines = data.toString().trim()
                 .split('\n');
 
+
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i];
+
+      lineCount += 1;
+
+      if (target.limit && lineCount > target.limit / 2) {
+          if (!banned) {
+              emitter.emit('alert', 2, [],
+                           util.format('error msg frequency exceeds %d/s',
+                                       target.limit));
+              banned = true;
+          }
+      }
+
+      if (banned) continue;
 
       if (target.ignore && target.ignore(line)) {
         continue;
