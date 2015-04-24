@@ -11,6 +11,8 @@ var events        = require('events');
 var util          = require('util');
 var child_process = require('child_process');
 
+var ERRORDOG_NOTIFY_LINE = "============>------------ ERRORDOG: %s ------------<============\n\r";
+
 // Log one message to process stdout.
 //
 // @param {String} format
@@ -29,7 +31,7 @@ function watch(target) {
   target.extract = target.extract || function(line) {
     return line;
   };
-  target.limit = target.limit || 0;
+  target.frequencyLimit = target.frequencyLimit || 500;
 
 
   var emitter = new events.EventEmitter();
@@ -41,11 +43,12 @@ function watch(target) {
   setInterval(function() {
       lastCount = lineCount;
       lineCount = 0;
-      if(banned && lastCount < target.limit / 2){
+      if (banned && lastCount < target.frequencyLimit / 2) {
           banned = false;
           emitter.emit('alert', 2, [],
+                       util.format(ERRORDOG_NOTIFY_LINE,
                        util.format('error msg frequency goes below %d/s again',
-                       target.limit));
+                       target.frequencyLimit)));
       }
   }, 500);
 
@@ -66,11 +69,13 @@ function watch(target) {
 
       lineCount += 1;
 
-      if (target.limit && lineCount > target.limit / 2) {
+      if (target.frequencyLimit && lineCount > target.frequencyLimit / 2) {
           if (!banned) {
               emitter.emit('alert', 2, [],
-                           util.format('error msg frequency exceeds %d/s',
-                                       target.limit));
+                           util.format(ERRORDOG_NOTIFY_LINE,
+                           util.format('error msg frequency exceeds %d/s, ' +
+                               'further error msg will be discarded',
+                           target.frequencyLimit)));
               banned = true;
           }
       }

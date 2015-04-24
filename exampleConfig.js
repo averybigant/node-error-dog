@@ -17,7 +17,7 @@ var foo = {
   ignore: function(line) {
     return line.indexOf('to-be-ignored') < 0;
   },
-  limit: 0,
+  frequencyLimit: 500,
   alerters: [
     [console_],
     [hipchat, {token: 'xxx', room: 123, atwho: ['@here']}]
